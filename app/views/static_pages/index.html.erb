@@ -1,1 +1,48 @@
+<script>
+
+  $(function(){
+    var inputNumber = '';
+
+    $('#fmatch').on('click', function(event){
+      inputNumber = $("#inputNum").val();
+
+      $.get("https://api.opendota.com/api/matches/" + inputNumber, function(data){
+        console.log(data);
+        $('#list').append('<li>Match ID: ' + data.match_id + '</li>');
+        $('#list').append('<li>Match Duration: ' + data.duration + '</li>');
+        $('#list').append('<li>Radiant Score: ' + data.radiant_score + '</li>');
+        $('#list').append('<li>Dire Score: ' + data.dire_score + '</li>');
+        if (data.radiant_win) {
+          $('#list').append('<li>Winner: Radiant</li>');
+        } else {
+          $('#list').append('<li>Winner: Dire</li>');
+        }
+        $('#list').append('<li><ul id="innerList">Players: </ul></li>');
+
+        $.each(data.players, function(index, value) {
+          if (value.account_id == null) {
+            $('#innerList').append('<li>Anonymous</li>');
+          } else {
+            $('#innerList').append('<li>' + value.account_id + '</li>');
+          }
+        });
+      });
+
+    });
+  });
+
+</script>
+
 <h1> Welcome to my Open Dota API project</h1>
+
+<input type="text" id="inputNum" placeholder="Add Info">
+
+<button id='fmatch' class='btn btn-info'>Find Matches</button>
+<!-- <button id='fplayer' class='btn btn-success'>Find Players</button>
+<button id='fpromatch' class='btn btn-primary'>Find Pro Matches</button>
+<button id='fproplayer' class='btn btn-default'>Find Pro Players</button> -->
+
+<div>
+  <ul id="list">
+  </ul>
+</div>
