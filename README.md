@@ -1,24 +1,39 @@
-# README
+# Open Dota API Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application requests info from the Open Dota API
 
-Things you may want to cover:
+### How to use
 
-* Ruby version
+```
 
-* System dependencies
+1. Clone this repository and open index.html with your browser.
 
-* Configuration
+2. In terminal, type: rails s
 
-* Database creation
+3. Enter an I.D into the form to get info
 
-* Database initialization
+```
 
-* How to run the test suite
+## Requirements
 
-* Services (job queues, cache servers, search engines, etc.)
+* Rails 5
 
-* Deployment instructions
+## Built With
 
-* ...
+* Rails
+* JavaScript
+* jQuery
+* Bootstrap
+* API
+
+## Authors
+
+* **Wilson Phoong** - [wphoong](https://github.com/wphoong)
+
+## License
+
+This is free to use by anyone. Feel free to do what you want with it!
+
+## Acknowledgments
+
+* Shoutout to [Open Dota](https://docs.opendota.com/)
