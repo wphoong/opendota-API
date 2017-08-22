@@ -1,13 +1,17 @@
 <script>
 
   $(function(){
+
     var inputNumber = '';
 
+    // API request for finding matches
     $('#fmatch').on('click', function(event){
-      inputNumber = $("#inputNum").val();
+      $('#list').remove();
 
+      inputNumber = $("#inputNum").val();
       $.get("https://api.opendota.com/api/matches/" + inputNumber, function(data){
         console.log(data);
+        $('#info').append('<ul id="list"></ul>');
         $('#list').append('<li>Match ID: ' + data.match_id + '</li>');
         $('#list').append('<li>Match Duration: ' + data.duration + '</li>');
         $('#list').append('<li>Radiant Score: ' + data.radiant_score + '</li>');
@@ -27,22 +31,73 @@
           }
         });
       });
-
     });
+    // End of API request for finding matches
+
+    // API request for finding players
+    $('#fplayer').on('click', function(event){
+      $('#list').remove();
+
+      inputNumber = $("#inputNum").val();
+      $.get("https://api.opendota.com/api/players/" + inputNumber, function(data){
+        console.log(data);
+        $('#info').append('<ul id="list"></ul>');
+        $('#list').append('<li>Name: ' + data.profile.personaname + '</li>');
+        $('#list').append('<li>Account ID: ' + data.profile.account_id + '</li>');
+        $('#list').append('<li>Steam ID: ' + data.profile.steamid + '</li>');
+        $('#list').append('<li>Country: ' + data.profile.loccountrycode + '</li>');
+        $('#list').append('<li>MMR Estimate: ' + data.mmr_estimate.estimate + '</li>');
+        $('#list').append('<li>Profile URL: ' + data.profile.profileurl + '</li>');
+      });
+    });
+    // End of API request for finding players
+
+    // API request for finding players
+    $('#fpromatch').on('click', function(event){
+      $('#list').remove();
+
+      inputNumber = $("#inputNum").val();
+
+      if (inputNumber == '') {
+        $.get("https://api.opendota.com/api/proMatches", function(data) {
+          $.each(data, function(index, value){
+            $('#info').append('<ul id="list"></ul>');
+            $('#list').append('<li>Match ID: ' + value.match_id + '</li>');
+            $('#list').append('<li>League Name: ' + value.league_name + '</li>');
+            $('#list').append('<li>League ID: ' + value.leagueid + '</li>');
+            $('#list').append('<li>Radiant: ' + value.radiant_name + '</li>');
+            $('#list').append('<li>Dire: ' + value.dire_name + '</li>');
+            $('#list').append('<li>Radiant Score: ' + value.radiant_score + '</li>');
+            $('#list').append('<li>Dire Score: ' + value.dire_score + '</li>');
+            $('#list').append('<li>Winner: ' + ((value.radiant_win) ? 'Radiant' : 'Dire') + '</li>');
+            $('#list').append('<br />');
+          });
+        });
+       } 
+      });
+    // End of API request for finding players
   });
 
 </script>
 
-<h1> Welcome to my Open Dota API project</h1>
+<h1 class="text-center"> Welcome to my Open Dota API project</h1>
 
-<input type="text" id="inputNum" placeholder="Add Info">
-
-<button id='fmatch' class='btn btn-info'>Find Matches</button>
-<!-- <button id='fplayer' class='btn btn-success'>Find Players</button>
-<button id='fpromatch' class='btn btn-primary'>Find Pro Matches</button>
-<button id='fproplayer' class='btn btn-default'>Find Pro Players</button> -->
-
+<br />
 <div>
-  <ul id="list">
-  </ul>
+  <input type="text" class="text-center form-control col-4 offset-4" id="inputNum" placeholder="Type Info Here">
+</div>
+
+<br />
+
+<div class="col-12 text-center">
+  <button id='fmatch' class='btn btn-info'>Find Matches</button>
+  <button id='fplayer' class='btn btn-success'>Find Players</button>
+  <button id='fpromatch' class='btn btn-primary'>Find Pro Matches</button>
+</div>
+<br />
+
+<div class="col-10">
+  <div id="info" class="col-6 offset-5">
+    
+  </div>
 </div>
